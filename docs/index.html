@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>AI Resume Assistant</h1>
+        </header>
+
+        <main class="main-content">
+            <!-- Column 1: Input -->
+            <div class="column">
+                <section id="upload-section" class="card">
+                    <h2>1. Input Resume</h2>
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="upload-file-tab">Upload File</button>
+                        <button class="tab-btn" data-tab="paste-text-tab">Paste Text</button>
+                    </div>
+
+                    <div id="upload-file-tab" class="tab-content active">
+                        <p>Upload a PDF or DOCX file.</p>
+                        <input type="file" id="resumeFile" accept=".pdf,.docx">
+                        <button id="uploadBtn" class="btn">Parse File</button>
+                    </div>
+                    <div id="paste-text-tab" class="tab-content">
+                        <p>Paste the full text of your resume below.</p>
+                        <textarea id="resumeText" rows="10" placeholder="Paste resume text here..."></textarea>
+                        <button id="pasteBtn" class="btn">Parse Text</button>
+                    </div>
+                </section>
+
+                <section id="jd-section" class="card">
+                    <h2>2. Input Job Description (Optional)</h2>
+                    <textarea id="jobDescription" rows="10" placeholder="Paste job description here..."></textarea>
+                </section>
+            </div>
+
+            <!-- Column 2: Output -->
+            <div class="column">
+                <section id="parsed-data-section" class="card">
+                    <h2>Parsed Resume Data</h2>
+                    <div id="loader" class="loader" style="display: none;"></div>
+                    <div id="parsedOutput">Your parsed resume will appear here.</div>
+                </section>
+
+                <section id="analysis-section" class="card">
+                    <h2>Analysis & Scoring</h2>
+                    <div id="analysisOutput">Analysis will appear here after parsing.</div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
