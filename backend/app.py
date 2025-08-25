@@ -13,19 +13,27 @@ from parsers.matcher import analyze_job_match
 
 app = FastAPI(title="AI Resume Assistant API")
 
-# Configure CORS
+# -----------------------------
+# Configure CORS for GitHub Pages
+# -----------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[""https://vivek11004.github.io],  # Allow all origins for local development
+    allow_origins=["https://vivek11004.github.io"],  # <-- your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# -----------------------------
+# Request model
+# -----------------------------
 class JDRequest(BaseModel):
     resume_data: Dict[str, Any]
     job_description: str
 
+# -----------------------------
+# Routes
+# -----------------------------
 @app.post("/parse/file")
 async def handle_parse_file(file: UploadFile = File(...)):
     # Use a temporary file to save the upload
@@ -37,7 +45,7 @@ async def handle_parse_file(file: UploadFile = File(...)):
     try:
         data = parse_resume_file(tmp_path)
     finally:
-        os.remove(tmp_path) # Clean up the temp file
+        os.remove(tmp_path)  # Clean up the temp file
         
     if "error" in data:
         raise HTTPException(status_code=400, detail=data["error"])
@@ -60,13 +68,17 @@ async def handle_match_resume(req: JDRequest):
     result = analyze_job_match(req.resume_data, req.job_description)
     return result
 
+# -----------------------------
+# Run the app with dynamic port for Render
+# -----------------------------
 if __name__ == "__main__":
     # Install NLTK data if not present
     try:
         import nltk
         nltk.data.find('corpora/stopwords')
-    except nltk.downloader.DownloadError:
+    except (nltk.downloader.DownloadError, LookupError):
         import nltk
         nltk.download('stopwords')
         
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    PORT = int(os.environ.get("PORT", 8000))  # Use Render's dynamic port
+    uvicorn.run("app:app", host="0.0.0.0", port=PORT, reload=True)
