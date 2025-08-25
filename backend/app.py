@@ -16,7 +16,7 @@ app = FastAPI(title="AI Resume Assistant API")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for local development
+    allow_origins=[""https://vivek11004.github.io],  # Allow all origins for local development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
