@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'https://ats-tracker-dj1a3ufwv-viveks-projects-549aa609.vercel.app';
+    const API_BASE_URL = 'https://ats-tracker-6.onrender.com';
 
     // State
     let resumeData = null;
