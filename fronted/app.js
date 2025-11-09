@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE_URL = 'https://energetic-learning-production.up.railway.app/';
+    const API_BASE_URL = 'https://ats-tracker-production.up.railway.app/';
 
     // State
     let resumeData = null;
