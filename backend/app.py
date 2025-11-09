@@ -90,15 +90,4 @@ async def handle_match_resume(req: JDRequest):
 
 # -----------------------------
 # Run the app with dynamic port
-# -----------------------------
-if __name__ == "__main__":
-    # Ensure NLTK stopwords are downloaded
-    try:
-        import nltk
-        nltk.data.find('corpora/stopwords')
-    except (nltk.downloader.DownloadError, LookupError):
-        import nltk
-        nltk.download('stopwords')
 
-    PORT = int(os.environ.get("PORT", 8000))  # Railway/Render dynamic port
-    uvicorn.run("app:app", host="0.0.0.0", port=port)
