@@ -1,8 +1,0 @@
-{
-  "build": {
-    "buildCommand": "docker build -t ats-tracker ."
-  },
-  "deploy": {
-    "startCommand": "docker run -p $PORT:8000 ats-tracker"
-  }
-}
