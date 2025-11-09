@@ -112,4 +112,8 @@ if __name__ == "__main__":
 
     # Dynamic port for Railway/Render
     PORT = int(os.environ.get("PORT", 8000))
+<<<<<<< HEAD
     uvicorn.run("app:app", host="0.0.0.0", port=Port)
+=======
+    uvicorn.run("app:app", host="0.0.0.0", port=Port)
+>>>>>>> 42a82114 (Update frontend to use Railway backend)
