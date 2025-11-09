@@ -81,4 +81,4 @@ if __name__ == "__main__":
         nltk.download('stopwords')
         
     PORT = int(os.environ.get("PORT", 8000))  # Use Render's dynamic port
-    uvicorn.run("app:app", host="0.0.0.0", port=PORT, reload=True)
+    uvicorn.run("app:app", host="0.0.0.0", port=PORT)
