@@ -27,6 +27,7 @@
                         <input type="file" id="resumeFile" accept=".pdf,.docx">
                         <button id="uploadBtn" class="btn">Parse File</button>
                     </div>
+
                     <div id="paste-text-tab" class="tab-content">
                         <p>Paste the full text of your resume below.</p>
                         <textarea id="resumeText" rows="10" placeholder="Paste resume text here..."></textarea>
@@ -55,6 +56,8 @@
             </div>
         </main>
     </div>
-    <script src="app.js"></script>
+
+    <!-- Include JS with cache-busting to ensure Railway URL is used -->
+    <script src="app.js?v=1"></script>
 </body>
 </html>
