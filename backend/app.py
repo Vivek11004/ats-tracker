@@ -90,4 +90,26 @@ async def handle_match_resume(req: JDRequest):
 
 # -----------------------------
 # Run the app with dynamic port
+# -----------------------------
+if __name__ == "__main__":
+    # Ensure NLTK stopwords are downloaded
+    try:
+        import nltk
+        nltk.data.find('corpora/stopwords')
+    except (nltk.downloader.DownloadError, LookupError):
+        import nltk
+        nltk.download('stopwords')
 
+    # Optional: load SpaCy model safely if used
+    try:
+        import spacy
+        nlp = spacy.load("en_core_web_sm")
+    except (ImportError, OSError):
+        import spacy
+        from spacy.cli import download
+        download("en_core_web_sm")
+        nlp = spacy.load("en_core_web_sm")
+
+    # Dynamic port for Railway/Render
+    PORT = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=PORT, reload=True)
