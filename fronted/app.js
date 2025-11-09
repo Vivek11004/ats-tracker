@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ✅ Always point to Railway backend
-    const API_BASE_URL = 'https://caring-balance-production.up.railway.app';
+    const API_BASE_URL = 'https://caring-balance-production.up.railway.app/';
 
     let resumeData = null;
 
