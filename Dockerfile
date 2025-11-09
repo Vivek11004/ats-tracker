@@ -16,5 +16,5 @@ WORKDIR /app/backend
 # Expose the port (Railway will map it)
 EXPOSE 8000
 
-# Start the FastAPI app
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+# ✅ Correct command — use $PORT dynamically
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}"]
