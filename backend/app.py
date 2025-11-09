@@ -25,6 +25,13 @@ app.add_middleware(
 )
 
 # -----------------------------
+# Health check route
+# -----------------------------
+@app.get("/")
+def health_check():
+    return {"status": "ok"}
+
+# -----------------------------
 # Request model
 # -----------------------------
 class JDRequest(BaseModel):
@@ -36,7 +43,6 @@ class JDRequest(BaseModel):
 # -----------------------------
 @app.post("/parse/file")
 async def handle_parse_file(file: UploadFile = File(...)):
-    # Use a temporary file to save the upload
     with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(file.filename)[1]) as tmp:
         contents = await file.read()
         tmp.write(contents)
@@ -45,7 +51,7 @@ async def handle_parse_file(file: UploadFile = File(...)):
     try:
         data = parse_resume_file(tmp_path)
     finally:
-        os.remove(tmp_path)  # Clean up the temp file
+        os.remove(tmp_path)
         
     if "error" in data:
         raise HTTPException(status_code=400, detail=data["error"])
@@ -69,10 +75,9 @@ async def handle_match_resume(req: JDRequest):
     return result
 
 # -----------------------------
-# Run the app with dynamic port for Render
+# Run the app with dynamic port for Railway
 # -----------------------------
 if __name__ == "__main__":
-    # Install NLTK data if not present
     try:
         import nltk
         nltk.data.find('corpora/stopwords')
@@ -80,5 +85,5 @@ if __name__ == "__main__":
         import nltk
         nltk.download('stopwords')
         
-    PORT = int(os.environ.get("PORT", 8000))  # Use Render's dynamic port
-    uvicorn.run("app:app", host="0.0.0.0", port=port)
+    PORT = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=PORT)
