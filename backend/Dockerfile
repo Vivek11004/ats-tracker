@@ -1,17 +1,17 @@
-# Use an official Python runtime
+# Use a lightweight Python image
 FROM python:3.11-slim
 
-# Set working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy your backend code
+# Copy only backend files
 COPY backend/ ./backend/
 
 # Install dependencies
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
-# Expose the default port
+# Expose port (for Railway, optional but nice)
 EXPOSE 8000
 
-# Start FastAPI using Uvicorn
+# Run the FastAPI app
 CMD exec uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}
