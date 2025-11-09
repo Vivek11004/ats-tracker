@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // ✅ Always point to Railway backend
     const API_BASE_URL = 'https://caring-balance-production.up.railway.app';
 
-    // State
     let resumeData = null;
 
-    // DOM Elements
     const uploadBtn = document.getElementById('uploadBtn');
     const pasteBtn = document.getElementById('pasteBtn');
     const resumeFile = document.getElementById('resumeFile');
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const parsedOutput = document.getElementById('parsedOutput');
     const analysisOutput = document.getElementById('analysisOutput');
 
-    // Tab handling
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     tabButtons.forEach(button => {
@@ -26,25 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Event Listeners
     uploadBtn.addEventListener('click', handleParseFile);
     pasteBtn.addEventListener('click', handleParseText);
 
     async function handleParseFile() {
-        if (!resumeFile.files.length) {
-            alert('Please select a file first.');
-            return;
-        }
+        if (!resumeFile.files.length) return alert('Select a file first.');
         const formData = new FormData();
         formData.append('file', resumeFile.files[0]);
         await parseAndAnalyze(formData, `${API_BASE_URL}/parse/file`);
     }
 
     async function handleParseText() {
-        if (!resumeText.value.trim()) {
-            alert('Please paste some text first.');
-            return;
-        }
+        if (!resumeText.value.trim()) return alert('Paste some text first.');
         const formData = new FormData();
         formData.append('text', resumeText.value);
         await parseAndAnalyze(formData, `${API_BASE_URL}/parse/text`);
@@ -57,13 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
         resumeData = null;
 
         try {
-            // 1. Parse the resume
             const parseRes = await fetch(url, { method: 'POST', body: formData });
             if (!parseRes.ok) throw new Error(`Parsing failed: ${await parseRes.text()}`);
             resumeData = await parseRes.json();
             displayParsedData(resumeData);
 
-            // 2. Score and Match
             const jd = jobDescription.value.trim();
             const payload = { resume_data: resumeData, job_description: jd || "" };
 
@@ -95,12 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayAnalysis(scoreData, matchData) {
         let html = `<h3>ATS Score: ${scoreData.score}/100</h3>`;
         html += `<ul>${scoreData.feedback.map(f => `<li>${f}</li>`).join('')}</ul>`;
-        
         html += `<hr><h3>Job Match Analysis</h3>`;
         html += `<p><strong>Semantic Similarity:</strong> ${matchData.similarity_score}%</p>`;
         html += `<h4>Matched Keywords:</h4><p>${matchData.matched_keywords.join(', ') || 'None'}</p>`;
         html += `<h4>Missing Keywords:</h4><p>${matchData.missing_keywords.join(', ') || 'None'}</p>`;
-
         analysisOutput.innerHTML = html;
     }
 
@@ -108,3 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         loader.style.display = isLoading ? 'block' : 'none';
     }
 });
+
+
+
