@@ -1,17 +1,17 @@
-# Use an official lightweight Python image
+# Use official lightweight Python image
 FROM python:3.11-slim
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy backend folder
-COPY backend/ ./backend/
+# Copy backend files
+COPY . .
 
 # Install dependencies
-RUN pip install --no-cache-dir -r backend/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
+# Expose backend port
 EXPOSE 8000
 
-# Start FastAPI app
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run FastAPI app
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
